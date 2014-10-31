@@ -12,6 +12,7 @@
   "dependencies": {
     "as-number": "^1.0.0",
     "bmfont-lato": "^2.0.0",
+    "brfs": "^1.2.0",
     "browserify": "^6.2.0",
     "browserify-shim": "^3.8.0",
     "canvas-app": "^2.3.0",
@@ -22,6 +23,9 @@
     "gl-mat4": "^1.0.0",
     "gl-sprite-text": "^2.2.0",
     "gl-texture2d": "^2.0.8",
+    "glsl-luma": "^1.0.1",
+    "glsl-lut": "^1.0.3",
+    "glsl-random": "0.0.4",
     "glslify": "^1.6.0",
     "gsap": "^1.14.1",
     "img": "^1.0.0",
@@ -32,11 +36,22 @@
     "three": "^0.68.0",
     "three-effectcomposer": "0.0.1",
     "three-glslify": "^2.0.1",
+    "three-shader-fxaa": "^3.0.0",
     "xtend": "^4.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "browserify": "^6.2.0",
+    "gulp": "^3.8.9",
+    "gulp-connect": "^2.0.6",
+    "gulp-livereload": "^2.1.1",
+    "gulp-util": "^3.0.1",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^2.1.0",
+    "xtend": "^4.0.0"
+  },
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "dev": "beefy index.js --live --index=dev.html"
   },
   "keywords": [],
   "repository": {
@@ -49,6 +64,7 @@
   },
   "browserify": {
     "transform": [
+      "brfs",
       "glslify",
       "browserify-shim"
     ]

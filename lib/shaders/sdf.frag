@@ -24,8 +24,9 @@ void main() {
 
     vec4 base = v_col * vec4(alpha);
 
+    // gl_FragColor = texColor;
     gl_FragColor = mix(base, glow, mask);
-    // gl_FragColor.rgb *= gl_FragColor.a;
+    gl_FragColor.rgb *= gl_FragColor.a;
     if (gl_FragColor.a<0.01)
         discard;
 }
