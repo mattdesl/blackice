@@ -49,11 +49,11 @@ function render(gl, width, height, dt) {
     // gl.clear(gl.COLOR_BUFFER_BIT)
     
     
-    textRenderer.begin()
-    features.forEach(function(spot) {
-        textRenderer.draw(camera, spot.text, spot.object, Math.sin(time)/2+0.5)
-    })
-    textRenderer.end()
+    // textRenderer.begin()
+    // features.forEach(function(spot) {
+    //     textRenderer.draw(camera, spot.text, spot.object, Math.sin(time)/2+0.5)
+    // })
+    // textRenderer.end()
 }
 
 function setup(gl, width, height) {
@@ -96,7 +96,7 @@ function setup(gl, width, height) {
         height: height
     })
 
-    // effects.setText(textRenderer, features)
+    effects.setText(textRenderer, features)
 }
 
 function handleResize(width, height) {
