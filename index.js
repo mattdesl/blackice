@@ -19,7 +19,6 @@ var createFeatures = require('./lib/feature-points')
 var EffectComposer = require('three-effectcomposer')(THREE)
 var Effects = require('./lib/setup-effects')
 
-
 var renderer,
     scene,
     camera,
@@ -41,6 +40,7 @@ function render(gl, width, height, dt) {
 
     cameraController.update()
     
+    scene.update(dt)
     effects.render(dt)
     // renderer.render(scene, camera)
 
@@ -54,6 +54,7 @@ function render(gl, width, height, dt) {
     //     textRenderer.draw(camera, spot.text, spot.object, Math.sin(time)/2+0.5)
     // })
     // textRenderer.end()
+    // 
 }
 
 function setup(gl, width, height) {
@@ -87,6 +88,9 @@ function setup(gl, width, height) {
     })
 
     water = require('./lib/setup-water')(renderer, camera, scene)
+    
+    scene.cubeMap = water.cubeMap
+    scene.updateMaterial()
 
     effects = Effects({
         renderer: renderer,
@@ -97,6 +101,7 @@ function setup(gl, width, height) {
     })
 
     effects.setText(textRenderer, features)
+
 }
 
 function handleResize(width, height) {
