@@ -28,7 +28,7 @@ void main() {
     p.x *= resolution.x/resolution.y;
 
     // float len = length(p);
-    float len = smoothstep(0.8, 1.2, length( p ));
+    float len = smoothstep(0.5, 1.2, length( p ));
 
     //the direction of our blur
     //(1.0, 0.0) -> x-axis blur
