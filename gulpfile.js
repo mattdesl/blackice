@@ -6,6 +6,7 @@ var livereload = require('gulp-livereload')
 var connect = require('gulp-connect')
 var browserify = require('browserify')
 var xtend = require('xtend')
+var concat = require('gulp-concat-sourcemap')
  
 gulp.task('bundle', function(){
     var args = xtend(watchify.args, { debug: true })
@@ -32,3 +33,13 @@ gulp.task('watch', ['bundle'], function(){
     })
     livereload.listen(35729)
 });
+
+var libs = [
+    'node_modules/gsap/src/uncompressed/TweenMax.js',
+    'node_modules/three/build/three.js'
+]
+gulp.task('libs', function() {
+    return gulp.src(libs)
+        .pipe(concat('libs.js'))
+        .pipe(gulp.dest('./js'))
+})
