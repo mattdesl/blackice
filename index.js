@@ -43,21 +43,21 @@ function render(gl, width, height, dt) {
 
     cameraController.update()
     
-    // scene.update(dt)
+    scene.update(dt)
     effects.render(dt)
     renderer.render(scene, camera)
 
     // gl.disable(gl.)
-    gl.clearColor(0,0,0,1)
-    gl.clear(gl.COLOR_BUFFER_BIT)
+    // gl.clearColor(0,0,0,1)
+    // gl.clear(gl.COLOR_BUFFER_BIT)
     
-    textRenderer.shader.bind()
-    textRenderer.shader.uniforms.time = Math.sin(time)/2+0.5
-    textRenderer.begin()
-    features.forEach(function(spot) {
-        textRenderer.draw(camera, spot.text, spot.object, Math.sin(time)/2+0.5)
-    })
-    textRenderer.end()
+    // textRenderer.shader.bind()
+    // textRenderer.shader.uniforms.time = Math.sin(time)/2+0.5
+    // textRenderer.begin()
+    // features.forEach(function(spot) {
+    //     textRenderer.draw(camera, spot.text, spot.object, Math.sin(time)/2+0.5)
+    // })
+    // textRenderer.end()
     // 
 }
 
@@ -143,36 +143,36 @@ require('domready')(function() {
     document.body.appendChild(app.canvas)
 
     var gl = app.context
-    preload(gl, [fontImage, fontImageFX1]).then(function(textures) {
-        setupSmoothTex(gl, textures[0])
-        setupNearestTex(gl, textures[1])
+    // preload(gl, [fontImage, fontImageFX1]).then(function(textures) {
+    //     setupSmoothTex(gl, textures[0])
+    //     setupNearestTex(gl, textures[1])
 
-        fontTextures = [textures[0], textures[1]]
+    //     fontTextures = [textures[0], textures[1]]
 
-        setup(gl, app.width, app.height)
-        app.start()
-    })
-
-    // img(fontImage, function(err, res) {
-    //     if (err)
-    //         console.error("cannot load font image at "+fontImage)
-    //     fontTextures = [res].map(function(i) {
-    //         var t = createTexture(app.context, i)
-
-    //         t.minFilter = gl.LINEAR_MIPMAP_LINEAR
-    //         t.magFilter = gl.LINEAR
-
-    //         var ext = (gl.getExtension('EXT_texture_filter_anisotropic') 
-    //                         || gl.getExtension("MOZ_EXT_texture_filter_anisotropic"));
-    //         if (ext) {
-    //             var maxAnistrophy = gl.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-    //             gl.texParameterf(gl.TEXTURE_2D, ext.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(16, maxAnistrophy));
-    //         }
-
-    //         t.generateMipmap()
-    //         return t
-    //     })
-    //     setup(app.context, app.width, app.height)    
+    //     setup(gl, app.width, app.height)
     //     app.start()
     // })
+
+    img(fontImage, function(err, res) {
+        if (err)
+            console.error("cannot load font image at "+fontImage)
+        fontTextures = [res].map(function(i) {
+            var t = createTexture(app.context, i)
+
+            t.minFilter = gl.LINEAR_MIPMAP_LINEAR
+            t.magFilter = gl.LINEAR
+
+            var ext = (gl.getExtension('EXT_texture_filter_anisotropic') 
+                            || gl.getExtension("MOZ_EXT_texture_filter_anisotropic"));
+            if (ext) {
+                var maxAnistrophy = gl.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+                gl.texParameterf(gl.TEXTURE_2D, ext.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(16, maxAnistrophy));
+            }
+
+            t.generateMipmap()
+            return t
+        })
+        setup(app.context, app.width, app.height)    
+        app.start()
+    })
 })
