@@ -19,6 +19,7 @@ var fontImageFX1 = 'fonts/Exo2SemiBold_rgb.png'
 var createFeatures = require('./lib/feature-points')
 var EffectComposer = require('three-effectcomposer')(THREE)
 var Effects = require('./lib/setup-effects')
+var TweenMax = require('gsap')
 
 var preload = require('./lib/preload')
 
@@ -45,14 +46,13 @@ function render(gl, width, height, dt) {
     
     scene.update(dt)
     effects.render(dt)
-    renderer.render(scene, camera)
 
     // gl.disable(gl.)
     // gl.clearColor(0,0,0,1)
     // gl.clear(gl.COLOR_BUFFER_BIT)
     
     // textRenderer.shader.bind()
-    // textRenderer.shader.uniforms.time = Math.sin(time)/2+0.5
+    textRenderer.time = time
     // textRenderer.begin()
     // features.forEach(function(spot) {
     //     textRenderer.draw(camera, spot.text, spot.object, Math.sin(time)/2+0.5)
@@ -106,6 +106,13 @@ function setup(gl, width, height) {
 
     effects.setText(textRenderer, features)
 
+    TweenMax.staggerFromTo(features, 1.0, {
+        fade: 0
+    }, { 
+        delay: 1.0,
+        fade: 1.0,
+        ease: "easeOutExpo"
+    }, 0.05)
 }
 
 function handleResize(width, height) {
