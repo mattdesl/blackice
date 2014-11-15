@@ -5,7 +5,6 @@ var app = require('canvas-app')(render, {
 })
 
 var THREE = require('three')
-
 var Renderer = require('./lib/renderer')
 var createFont = require('./lib/create-font')
 
