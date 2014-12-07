@@ -90,7 +90,7 @@ THREE.OBJMTLLoader.prototype = {
 
 				geometry.vertices = vertices;
 
-				geometry.mergeVertices();
+				// geometry.mergeVertices();
 				geometry.computeFaceNormals();
 				geometry.computeBoundingSphere();
 

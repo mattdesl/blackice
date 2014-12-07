@@ -40,6 +40,7 @@
     "three": "^0.68.0",
     "three-effectcomposer": "0.0.1",
     "three-glslify": "^2.0.1",
+    "three-sdf-text": "git://github.com/mattdesl/three-sdf-text#drop-shadow",
     "three-shader-fxaa": "^3.0.0",
     "unlerp": "^1.0.1",
     "xtend": "^4.0.0"
