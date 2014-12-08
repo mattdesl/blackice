@@ -19,7 +19,7 @@ const float glowMax = 0.8;
 
 // drop shadow computed in fragment shader
 void main() {
-    float anim = mod(fade, animOffset);
+    float anim = fade;
     vec4 smoothColor = vec4(0.0);
     vec4 texColor = texture2D(texture0, v_tex0);
 

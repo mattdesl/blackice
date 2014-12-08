@@ -1,7 +1,7 @@
 var app = require('canvas-app')(render, {
     context: 'webgl',
     contextAttributes: { antialias: false, alpha: false },
-    retina: false,
+    retina: true,
     onResize: handleResize
 })
 
