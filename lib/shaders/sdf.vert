@@ -15,5 +15,8 @@ void main() {
    v_col = color;
    v_tex0 = texcoord0;
    gl_PointSize = 1.0;
-   animOffset = position.x;
+   animOffset = position.x / 100.0;
+   // float anim = fade * (position.x / 50.0);
+   // animOffset = smoothstep(0.99, 1.0, anim);
+   // animOffset = clamp(animOffset, 0.0, 1.0);
 }
