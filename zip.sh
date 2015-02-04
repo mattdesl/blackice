@@ -1,7 +1,10 @@
 rm -f zip/blackice-demo.zip && \
 zip zip/blackice-demo.zip -r \
-        build/three-libs.min.js \
+        build/blackice.js \
         build/blackice.min.js \
+        build/three-libs.minjs \
+        build/three-libs.js \
+        build/three-libs.js.map \
         fonts/Exo2SemiBold.fnt \
         fonts/Exo2SemiBold.png \
         img/lookup.png \
