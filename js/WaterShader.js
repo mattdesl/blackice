@@ -23,6 +23,7 @@ THREE.ShaderLib['water'] = {
 		"textureMatrix" :	{ type: "m4", value: new THREE.Matrix4() },
 		"sunColor":			{ type: "c", value: new THREE.Color( 0x7F7F7F ) },
 		"sunDirection":		{ type: "v3", value: new THREE.Vector3( 0.70707, 0.70707, 0 ) },
+		"origin":		{ type: "v3", value: new THREE.Vector3() },
 		"eye":				{ type: "v3", value: new THREE.Vector3( 0, 0, 0 ) },
 		"waterColor":		{ type: "c", value: new THREE.Color( 0x555555 ) }
 		}
@@ -58,6 +59,7 @@ THREE.ShaderLib['water'] = {
 		'uniform vec3 sunDirection;',
 		'uniform vec3 eye;',
 		'uniform vec3 waterColor;',
+		'uniform vec3 origin;',
 
 		'varying vec4 mirrorCoord;',
 		'varying vec3 worldPosition;',
@@ -97,17 +99,21 @@ THREE.ShaderLib['water'] = {
 		'	vec3 eyeDirection = normalize( worldToEye );',
 		'	sunLight( surfaceNormal, eyeDirection, 1000.0, 2.0, 0.5, diffuseLight, specularLight );',
 		
-		'	float distance = length(worldToEye);',
+		'	float dist = length(worldToEye);',
 
-		'	vec2 distortion = surfaceNormal.xz * ( 0.001 + 1.0 / distance ) * distortionScale;',
+		'	vec2 distortion = surfaceNormal.xz * ( 0.001 + 1.0 / dist ) * distortionScale;',
 		'	vec3 reflectionSample = vec3( texture2D( mirrorSampler, mirrorCoord.xy / mirrorCoord.z + distortion ) );',
-
+			'float mLen = distance(worldPosition.xz, origin.xz) / 300.0;',
 		'	float theta = max( dot( eyeDirection, surfaceNormal ), 0.0 );',
 		'	float rf0 = 0.3;',
 		'	float reflectance = rf0 + ( 1.0 - rf0 ) * pow( ( 1.0 - theta ), 5.0 );',
+			'reflectance += 0.1 * smoothstep(1.0, 0.5, mLen);',
 		'	vec3 scatter = max( 0.0, dot( surfaceNormal, eyeDirection ) ) * waterColor;',
 		'	vec3 albedo = mix( sunColor * diffuseLight * 0.1 + scatter, ( vec3( 0.0 ) + reflectionSample * 1.2 + reflectionSample * specularLight ), reflectance );',
-		'	gl_FragColor = vec4( albedo, alpha );',
+
+			'float opening = 1.0 - alpha;',
+			'float mAlpha = smoothstep(0.1 * opening, 0.3 * opening, mLen);',
+		'	gl_FragColor = vec4( albedo, mix(0.3, 0.9, mAlpha) );',
 		THREE.ShaderChunk[ "fog_fragment" ],
 		'}'
 	].join('\n')
@@ -135,7 +141,7 @@ THREE.Water = function ( renderer, camera, scene, options ) {
 	this.sunDirection = optionalParameter( options.sunDirection, new THREE.Vector3( 0.70707, 0.70707, 0.0 ) );
 	this.sunColor = new THREE.Color( optionalParameter( options.sunColor, 0xffffff ) );
 	this.waterColor = new THREE.Color( optionalParameter( options.waterColor, 0x7F7F7F ) );
-	this.eye = optionalParameter( options.eye, new THREE.Vector3( 0, 0, 0 ) );
+	this.eye = optionalParameter( options.eye, new THREE.Vector3( 0, -2.5, 0 ) );
 	this.distortionScale = optionalParameter( options.distortionScale, 20.0 );
 	
 	this.renderer = renderer;

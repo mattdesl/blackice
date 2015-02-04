@@ -42,7 +42,7 @@
     "simplify-path": "^1.0.1",
     "smoothstep": "^1.0.1",
     "svg-path-contours": "^1.0.1",
-    "three": "^0.68.0",
+    "three": "git://github.com/mattdesl/three.js#reset-state-1",
     "three-effectcomposer": "0.0.1",
     "three-glslify": "^2.0.1",
     "three-sdf-text": "git://github.com/mattdesl/three-sdf-text#drop-shadow",
