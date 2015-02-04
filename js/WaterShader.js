@@ -130,7 +130,6 @@ THREE.Water = function ( renderer, camera, scene, options ) {
 	var width = optionalParameter( options.textureWidth, 512 );
 	var height = optionalParameter( options.textureHeight, 512 );
 	this.clipBias = optionalParameter( options.clipBias, 0.0 );
-	this.alpha = optionalParameter( options.alpha, 1.0 );
 	this.time = optionalParameter( options.time, 0.0 );
 	this.normalSampler = optionalParameter( options.waterNormals, null );
 	this.sunDirection = optionalParameter( options.sunDirection, new THREE.Vector3( 0.70707, 0.70707, 0.0 ) );
@@ -177,7 +176,6 @@ THREE.Water = function ( renderer, camera, scene, options ) {
 
 	this.material.uniforms.mirrorSampler.value = this.texture;
 	this.material.uniforms.textureMatrix.value = this.textureMatrix;
-	this.material.uniforms.alpha.value = this.alpha;
 	this.material.uniforms.time.value = this.time;
 	this.material.uniforms.normalSampler.value = this.normalSampler;
 	this.material.uniforms.sunColor.value = this.sunColor;
@@ -185,6 +183,8 @@ THREE.Water = function ( renderer, camera, scene, options ) {
 	this.material.uniforms.sunDirection.value = this.sunDirection;
 	this.material.uniforms.distortionScale.value = this.distortionScale;
 	
+	this.alpha = optionalParameter( options.alpha, 1.0 );
+
 	this.material.uniforms.eye.value = this.eye;
 	
 	if ( !THREE.Math.isPowerOfTwo(width) || !THREE.Math.isPowerOfTwo(height) )
@@ -199,6 +199,14 @@ THREE.Water = function ( renderer, camera, scene, options ) {
 
 THREE.Water.prototype = Object.create( THREE.Mirror.prototype );
 
+Object.defineProperty(THREE.Water.prototype, "alpha", {
+	get: function() {
+		return this.material.uniforms.alpha.value
+	},
+	set: function(alpha) {
+		this.material.uniforms.alpha.value = alpha
+	}
+})
 
 THREE.Water.prototype.updateTextureMatrix = function () {
 
