@@ -47,8 +47,8 @@ gulp.task('dist', ['bundle-dist'], function() {
         'js/libs.js',
         'js/Mirror.js',
         'js/WaterShader.js',
-        'js/OBJLoader.js',
-        'js/MTLLoader.js',
+        // 'js/OBJLoader.js',
+        // 'js/MTLLoader.js',
         'js/OBJMTLLoader.js'
     ]).pipe(concat('three-libs.js', { newLine: ';' }))
       .pipe(gulp.dest('./build'))
