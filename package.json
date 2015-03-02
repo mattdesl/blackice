@@ -39,6 +39,7 @@
     "parse-svg-path": "^0.1.1",
     "plucker": "0.0.0",
     "raf.js": "0.0.4",
+    "randf": "^1.0.0",
     "simplify-path": "^1.0.1",
     "smoothstep": "^1.0.1",
     "svg-path-contours": "^1.0.1",
