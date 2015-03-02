@@ -50,10 +50,12 @@
     "three-shader-fxaa": "^3.0.0",
     "three-simplicial-complex": "^69.0.4",
     "triangulate-contours": "^1.0.1",
+    "ua-device-type": "0.0.3",
     "unlerp": "^1.0.1",
     "xtend": "^4.0.0"
   },
   "devDependencies": {
+    "bmfont2json": "^0.1.7",
     "browserify": "^6.2.0",
     "gulp": "^3.8.9",
     "gulp-concat": "^2.4.3",
@@ -74,6 +76,7 @@
     "uglify-libs": "uglifyjs build/three-libs.js > build/three-libs.min.js",
     "uglify-blackice": "uglifyjs build/blackice.js > build/blackice.min.js",
     "zip-contents": "./zip.sh",
+    "font": "bmfont2json ./fonts/Exo2SemiBold.fnt > ./fonts/Exo2SemiBold.json",
     "zip": "npm run uglify-libs && npm run uglify-blackice && npm run zip-contents"
   },
   "keywords": [],
