@@ -112,7 +112,7 @@ THREE.ShaderLib['water'] = {
 		'	vec3 albedo = mix( sunColor * diffuseLight * 0.1 + scatter, ( vec3( 0.0 ) + reflectionSample * 1.2 + reflectionSample * specularLight ), reflectance );',
 
 			'float opening = 1.0 - alpha;',
-			'float mAlpha = smoothstep(0.1 * opening, 1.0 * opening, mLen);',
+			'float mAlpha = smoothstep(0.0 * opening, 1.2 * opening, mLen);',
 		'	gl_FragColor = vec4( albedo, mix(0.3, 0.9, mAlpha) );',
 		THREE.ShaderChunk[ "fog_fragment" ],
 		'}'
