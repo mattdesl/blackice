@@ -12,5 +12,5 @@ newmtl 17___Default
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka PrirazlomnayaTexture.png
-	map_Kd PrirazlomnayaTexture.png
+	map_Ka PrirazlomnayaTexture.jpg
+	map_Kd PrirazlomnayaTexture.jpg
