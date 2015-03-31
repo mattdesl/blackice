@@ -95,8 +95,8 @@ function RigScene(opt) {
     this.updateMaterial()
 
     var loader = new THREE.OBJMTLLoader()
-    loader.load('model/Prirazlomnayawithpipes3.obj', 'model/Prirazlomnayawithpipes3.mtl', function(object, materials) {
-        var s = 0.3
+    loader.load('model/PrirazlomnayaUnwrappedFinal.obj', 'model/PrirazlomnayaUnwrappedFinal.mtl', function(object, materials) {
+        var s = 0.325
         console.log(object, materials)
         object.scale.set(s,s,s)
         object.position.y -= YOFF
@@ -107,6 +107,7 @@ function RigScene(opt) {
                 obj.castShadow = true
                 obj.receiveShadow = true
                 obj.material.shininess = 1
+                obj.material.emissive = new THREE.Color('rgb(130,130,130)')
                 if (obj.material.map) {
                     obj.material.transparent = true
                 }
@@ -619,7 +620,7 @@ module.exports = function(opt) {
         animateLabels(controller, labels)
 
         var t = unlerp(0.6, 1.4, controller.phi)
-        t = smoothstep(1.4, 0.45, t)
+        t = smoothstep(1.5, 0.95, t)
         var range = clamp(t, 0, 1)
         water.alpha = range||0
     }
@@ -841,10 +842,15 @@ module.exports = function(scene) {
     geo.vertices.forEach(function(v) {
         var len = vec2.set(v.x, v.y).length() / 50
         var slen = smoothstep(0.4, 1.0, len)
-        v.z = random(-20, 35) * slen 
+        v.z = random(10, 40) * slen 
 
         slen = smoothstep(0.7, 1.0, len)
-        var L = lerp(0.2, 1.0, slen)
+        var base = smoothstep(0.2, 0.0, len)*0.5
+        slen += base
+
+        v.z += random(-10, 5) * base
+
+        var L = slen//lerp(0.9, 1.0, slen)
         var color = new THREE.Color(L, L, L)
         geo.colors.push(color)
     })
@@ -866,7 +872,7 @@ module.exports = function(scene) {
     })
     var mesh = new THREE.Mesh(geo, mat)
     mesh.rotation.x = -Math.PI/2
-    mesh.position.y = -25
+    mesh.position.y = -30
     var stretch = 10
     mesh.scale.x = mesh.scale.y = stretch
     scene.add(mesh)

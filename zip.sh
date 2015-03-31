@@ -9,9 +9,11 @@ zip zip/blackice-demo.zip -r \
         fonts/Exo2SemiBold.png \
         img/lookup.png \
         img/dust.jpg \
+        img/snow.jpg \
         img/waternormals5.jpg \
         img/cloudy_night2.jpg \
-        model/Prirazlomnayawithpipes3.mtl \
-        model/Prirazlomnayawithpipes3.obj \
+        img/no-webgl.jpg \
+        model/PrirazlomnayaUnwrappedFinal.mtl \
+        model/PrirazlomnayaUnwrappedFinal.obj \
         model/texture.png \
         test.html
