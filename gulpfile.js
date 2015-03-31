@@ -6,8 +6,9 @@ var livereload = require('gulp-livereload')
 var connect = require('gulp-connect')
 var browserify = require('browserify')
 var xtend = require('xtend')
-var concat = require('gulp-concat-sourcemap')
+var concat = require('gulp-concat')
 var uglify = require('gulp-uglifyjs')
+var sourcemaps = require('gulp-sourcemaps')
 var buffer = require('vinyl-buffer')
 
 gulp.task('bundle', createBundler(true))
@@ -16,7 +17,7 @@ gulp.task('bundle-dist', createBundler(false))
 
 function createBundler(debug) {
     return function() {
-        var args = xtend(watchify.args, { debug: true })
+    var args = xtend(watchify.args, { debug: debug })
         var b = debug ? watchify(browserify(args)) : browserify({ standalone: 'blackice' })
         if (debug)
             b.on('update', bundle)
@@ -42,13 +43,13 @@ function createBundler(debug) {
     }
 }
 
-gulp.task('dist', ['bundle-dist'], function() {
+gulp.task('dist', ['libs', 'bundle-dist'], function() {
     return gulp.src([
         'js/libs.js',
         'js/Mirror.js',
         'js/WaterShader.js',
         // 'js/OBJLoader.js',
-        // 'js/MTLLoader.js',
+        'js/MTLLoader.js',
         'js/OBJMTLLoader.js'
     ]).pipe(concat('three-libs.js', { newLine: ';' }))
       .pipe(gulp.dest('./build'))

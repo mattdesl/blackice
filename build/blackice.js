@@ -6,6 +6,8 @@ var THREE = (typeof window !== "undefined" ? window.THREE : typeof global !== "u
 var Renderer = require('./lib/renderer')
 var createFont = require('./lib/create-font')
 var xtend = require('xtend')
+var getContext = require('webgl-context')
+var noop = function(){}
 
 module.exports = function(opt) {
     opt = opt||{}
@@ -20,7 +22,7 @@ module.exports = function(opt) {
     var renderer
 
     app.load = function(cb) {
-        cb = cb || function() {}
+        cb = cb || noop
         var gl = app.context
         createFont(gl, function(err, font) {
             renderer = Renderer({
@@ -63,8 +65,55 @@ module.exports = function(opt) {
         t.minFilter = t.magFilter = gl.NEAREST
     }
 }
+
+module.exports.setup = function(cb) {
+    cb = cb || noop
+    var gl = getContext()
+    if (!gl) {
+        fallback()
+        cb(new Error('no WebGL supported'))
+    } else {
+        cb(null)
+    } 
+}
+
+function fallback() {
+    var img = new Image()
+    img.onload = function() {
+        document.body.appendChild(img)
+        var parent = document.createElement('div')
+        parent.style.width = '100%'
+        parent.style.height = '100%'
+        parent.style.position = 'absolute'
+        parent.style.top = parent.style.left = '0'
+        parent.style['text-align'] = 'center'
+
+        var text = document.createElement('div')
+        text.textContent = 'Sorry, your browser does not support WebGL!'
+        text.style.color = 'white'
+        text.style['margin-top'] = '25%'
+        text.style['font-family'] = 'Helvetica, sans-serif'
+        text.style['font-size'] = '26px'
+
+        parent.appendChild(text)
+        document.body.appendChild(parent)
+    }
+    img.src = 'img/no-webgl.jpg'
+    img.style.width = '100%'
+    img.style.opacity = '0.5'
+    center(img)
+}
+
+function center(el) {
+    el.style.position = 'absolute'
+    el.style.top = '0'
+    el.style.left = '0'
+    el.style.left = '0'
+    el.style.bottom = '0'
+    el.style.margin = 'auto'
+}
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/create-font":6,"./lib/renderer":9,"canvas-app":24,"raf.js":76,"xtend":100}],2:[function(require,module,exports){
+},{"./lib/create-font":6,"./lib/renderer":9,"canvas-app":24,"raf.js":76,"webgl-context":97,"xtend":100}],2:[function(require,module,exports){
 module.exports={"pages":["Exo2SemiBold.png"],"chars":[{"id":32,"x":0,"y":0,"width":0,"height":0,"xoffset":0,"yoffset":33,"xadvance":7,"page":0,"chnl":0},{"id":41,"x":0,"y":0,"width":20,"height":41,"xoffset":-4,"yoffset":3,"xadvance":12,"page":0,"chnl":0},{"id":40,"x":20,"y":0,"width":19,"height":41,"xoffset":-3,"yoffset":3,"xadvance":12,"page":0,"chnl":0},{"id":166,"x":39,"y":0,"width":13,"height":40,"xoffset":-2,"yoffset":3,"xadvance":8,"page":0,"chnl":0},{"id":124,"x":52,"y":0,"width":13,"height":40,"xoffset":-2,"yoffset":3,"xadvance":8,"page":0,"chnl":0},{"id":125,"x":65,"y":0,"width":18,"height":40,"xoffset":-3,"yoffset":4,"xadvance":11,"page":0,"chnl":0},{"id":123,"x":83,"y":0,"width":18,"height":40,"xoffset":-3,"yoffset":4,"xadvance":11,"page":0,"chnl":0},{"id":36,"x":101,"y":0,"width":25,"height":39,"xoffset":-3,"yoffset":3,"xadvance":18,"page":0,"chnl":0},{"id":93,"x":126,"y":0,"width":17,"height":39,"xoffset":-3,"yoffset":4,"xadvance":11,"page":0,"chnl":0},{"id":91,"x":143,"y":0,"width":17,"height":39,"xoffset":-2,"yoffset":4,"xadvance":11,"page":0,"chnl":0},{"id":81,"x":160,"y":0,"width":28,"height":39,"xoffset":-3,"yoffset":6,"xadvance":22,"page":0,"chnl":0},{"id":182,"x":188,"y":0,"width":25,"height":38,"xoffset":-3,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":167,"x":213,"y":0,"width":24,"height":38,"xoffset":-3,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":106,"x":237,"y":0,"width":16,"height":38,"xoffset":-4,"yoffset":6,"xadvance":9,"page":0,"chnl":0},{"id":92,"x":253,"y":0,"width":26,"height":34,"xoffset":-4,"yoffset":6,"xadvance":17,"page":0,"chnl":0},{"id":47,"x":279,"y":0,"width":26,"height":34,"xoffset":-4,"yoffset":6,"xadvance":17,"page":0,"chnl":0},{"id":102,"x":305,"y":0,"width":23,"height":33,"xoffset":-4,"yoffset":5,"xadvance":13,"page":0,"chnl":0},{"id":169,"x":328,"y":0,"width":33,"height":32,"xoffset":-3,"yoffset":6,"xadvance":26,"page":0,"chnl":0},{"id":165,"x":361,"y":0,"width":29,"height":32,"xoffset":-4,"yoffset":6,"xadvance":20,"page":0,"chnl":0},{"id":163,"x":390,"y":0,"width":25,"height":32,"xoffset":-3,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":162,"x":415,"y":0,"width":23,"height":32,"xoffset":-3,"yoffset":6,"xadvance":16,"page":0,"chnl":0},{"id":161,"x":438,"y":0,"width":14,"height":32,"xoffset":-2,"yoffset":12,"xadvance":9,"page":0,"chnl":0},{"id":38,"x":452,"y":0,"width":32,"height":32,"xoffset":-3,"yoffset":6,"xadvance":25,"page":0,"chnl":0},{"id":35,"x":0,"y":41,"width":30,"height":32,"xoffset":-3,"yoffset":6,"xadvance":22,"page":0,"chnl":0},{"id":37,"x":30,"y":41,"width":36,"height":32,"xoffset":-3,"yoffset":6,"xadvance":29,"page":0,"chnl":0},{"id":63,"x":66,"y":41,"width":24,"height":32,"xoffset":-3,"yoffset":6,"xadvance":16,"page":0,"chnl":0},{"id":33,"x":90,"y":41,"width":14,"height":32,"xoffset":-2,"yoffset":6,"xadvance":9,"page":0,"chnl":0},{"id":48,"x":104,"y":41,"width":26,"height":32,"xoffset":-3,"yoffset":6,"xadvance":20,"page":0,"chnl":0},{"id":57,"x":130,"y":41,"width":25,"height":32,"xoffset":-3,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":56,"x":155,"y":41,"width":26,"height":32,"xoffset":-3,"yoffset":6,"xadvance":20,"page":0,"chnl":0},{"id":55,"x":181,"y":41,"width":24,"height":32,"xoffset":-3,"yoffset":6,"xadvance":17,"page":0,"chnl":0},{"id":54,"x":205,"y":41,"width":26,"height":32,"xoffset":-3,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":53,"x":231,"y":41,"width":24,"height":32,"xoffset":-3,"yoffset":6,"xadvance":17,"page":0,"chnl":0},{"id":52,"x":255,"y":41,"width":27,"height":32,"xoffset":-3,"yoffset":6,"xadvance":20,"page":0,"chnl":0},{"id":51,"x":282,"y":41,"width":25,"height":32,"xoffset":-3,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":50,"x":307,"y":41,"width":25,"height":32,"xoffset":-3,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":49,"x":332,"y":41,"width":19,"height":32,"xoffset":-4,"yoffset":6,"xadvance":13,"page":0,"chnl":0},{"id":121,"x":351,"y":41,"width":27,"height":32,"xoffset":-4,"yoffset":12,"xadvance":17,"page":0,"chnl":0},{"id":113,"x":378,"y":41,"width":25,"height":32,"xoffset":-3,"yoffset":12,"xadvance":19,"page":0,"chnl":0},{"id":112,"x":403,"y":41,"width":25,"height":32,"xoffset":-2,"yoffset":12,"xadvance":19,"page":0,"chnl":0},{"id":108,"x":428,"y":41,"width":17,"height":32,"xoffset":-2,"yoffset":6,"xadvance":10,"page":0,"chnl":0},{"id":107,"x":445,"y":41,"width":24,"height":32,"xoffset":-2,"yoffset":6,"xadvance":17,"page":0,"chnl":0},{"id":105,"x":469,"y":41,"width":14,"height":32,"xoffset":-2,"yoffset":6,"xadvance":8,"page":0,"chnl":0},{"id":104,"x":483,"y":41,"width":24,"height":32,"xoffset":-2,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":103,"x":0,"y":73,"width":27,"height":32,"xoffset":-4,"yoffset":12,"xadvance":18,"page":0,"chnl":0},{"id":100,"x":27,"y":73,"width":25,"height":32,"xoffset":-3,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":98,"x":52,"y":73,"width":25,"height":32,"xoffset":-2,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":90,"x":77,"y":73,"width":25,"height":32,"xoffset":-3,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":89,"x":102,"y":73,"width":28,"height":32,"xoffset":-4,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":88,"x":130,"y":73,"width":29,"height":32,"xoffset":-4,"yoffset":6,"xadvance":20,"page":0,"chnl":0},{"id":87,"x":159,"y":73,"width":39,"height":32,"xoffset":-4,"yoffset":6,"xadvance":31,"page":0,"chnl":0},{"id":86,"x":198,"y":73,"width":29,"height":32,"xoffset":-4,"yoffset":6,"xadvance":20,"page":0,"chnl":0},{"id":85,"x":227,"y":73,"width":27,"height":32,"xoffset":-2,"yoffset":6,"xadvance":21,"page":0,"chnl":0},{"id":84,"x":254,"y":73,"width":28,"height":32,"xoffset":-4,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":83,"x":282,"y":73,"width":25,"height":32,"xoffset":-3,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":82,"x":307,"y":73,"width":26,"height":32,"xoffset":-2,"yoffset":6,"xadvance":20,"page":0,"chnl":0},{"id":80,"x":333,"y":73,"width":26,"height":32,"xoffset":-2,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":79,"x":359,"y":73,"width":28,"height":32,"xoffset":-3,"yoffset":6,"xadvance":22,"page":0,"chnl":0},{"id":78,"x":387,"y":73,"width":28,"height":32,"xoffset":-2,"yoffset":6,"xadvance":23,"page":0,"chnl":0},{"id":77,"x":415,"y":73,"width":34,"height":32,"xoffset":-2,"yoffset":6,"xadvance":29,"page":0,"chnl":0},{"id":76,"x":449,"y":73,"width":24,"height":32,"xoffset":-2,"yoffset":6,"xadvance":17,"page":0,"chnl":0},{"id":75,"x":473,"y":73,"width":27,"height":32,"xoffset":-2,"yoffset":6,"xadvance":20,"page":0,"chnl":0},{"id":74,"x":0,"y":105,"width":18,"height":32,"xoffset":-4,"yoffset":6,"xadvance":11,"page":0,"chnl":0},{"id":73,"x":18,"y":105,"width":14,"height":32,"xoffset":-2,"yoffset":6,"xadvance":9,"page":0,"chnl":0},{"id":72,"x":32,"y":105,"width":27,"height":32,"xoffset":-2,"yoffset":6,"xadvance":22,"page":0,"chnl":0},{"id":71,"x":59,"y":105,"width":27,"height":32,"xoffset":-3,"yoffset":6,"xadvance":20,"page":0,"chnl":0},{"id":70,"x":86,"y":105,"width":24,"height":32,"xoffset":-2,"yoffset":6,"xadvance":17,"page":0,"chnl":0},{"id":69,"x":110,"y":105,"width":24,"height":32,"xoffset":-2,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":68,"x":134,"y":105,"width":27,"height":32,"xoffset":-2,"yoffset":6,"xadvance":21,"page":0,"chnl":0},{"id":67,"x":161,"y":105,"width":26,"height":32,"xoffset":-3,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":66,"x":187,"y":105,"width":26,"height":32,"xoffset":-2,"yoffset":6,"xadvance":20,"page":0,"chnl":0},{"id":65,"x":213,"y":105,"width":30,"height":32,"xoffset":-4,"yoffset":6,"xadvance":20,"page":0,"chnl":0},{"id":64,"x":243,"y":105,"width":29,"height":31,"xoffset":-2,"yoffset":9,"xadvance":24,"page":0,"chnl":0},{"id":116,"x":272,"y":105,"width":22,"height":30,"xoffset":-4,"yoffset":8,"xadvance":13,"page":0,"chnl":0},{"id":59,"x":294,"y":105,"width":14,"height":29,"xoffset":-2,"yoffset":14,"xadvance":8,"page":0,"chnl":0},{"id":164,"x":308,"y":105,"width":25,"height":26,"xoffset":-3,"yoffset":9,"xadvance":19,"page":0,"chnl":0},{"id":122,"x":333,"y":105,"width":24,"height":26,"xoffset":-3,"yoffset":12,"xadvance":17,"page":0,"chnl":0},{"id":120,"x":357,"y":105,"width":26,"height":26,"xoffset":-4,"yoffset":12,"xadvance":17,"page":0,"chnl":0},{"id":119,"x":383,"y":105,"width":36,"height":26,"xoffset":-4,"yoffset":12,"xadvance":27,"page":0,"chnl":0},{"id":118,"x":419,"y":105,"width":27,"height":26,"xoffset":-4,"yoffset":12,"xadvance":17,"page":0,"chnl":0},{"id":117,"x":446,"y":105,"width":24,"height":26,"xoffset":-2,"yoffset":12,"xadvance":19,"page":0,"chnl":0},{"id":115,"x":470,"y":105,"width":24,"height":26,"xoffset":-3,"yoffset":12,"xadvance":17,"page":0,"chnl":0},{"id":114,"x":0,"y":137,"width":20,"height":26,"xoffset":-2,"yoffset":12,"xadvance":13,"page":0,"chnl":0},{"id":111,"x":20,"y":137,"width":25,"height":26,"xoffset":-3,"yoffset":12,"xadvance":18,"page":0,"chnl":0},{"id":110,"x":45,"y":137,"width":24,"height":26,"xoffset":-2,"yoffset":12,"xadvance":19,"page":0,"chnl":0},{"id":109,"x":69,"y":137,"width":33,"height":26,"xoffset":-2,"yoffset":12,"xadvance":28,"page":0,"chnl":0},{"id":101,"x":102,"y":137,"width":25,"height":26,"xoffset":-3,"yoffset":12,"xadvance":18,"page":0,"chnl":0},{"id":99,"x":127,"y":137,"width":23,"height":26,"xoffset":-3,"yoffset":12,"xadvance":16,"page":0,"chnl":0},{"id":97,"x":150,"y":137,"width":24,"height":26,"xoffset":-3,"yoffset":12,"xadvance":18,"page":0,"chnl":0},{"id":177,"x":174,"y":137,"width":24,"height":25,"xoffset":-2,"yoffset":11,"xadvance":19,"page":0,"chnl":0},{"id":178,"x":198,"y":137,"width":21,"height":24,"xoffset":-3,"yoffset":3,"xadvance":14,"page":0,"chnl":0},{"id":43,"x":219,"y":137,"width":24,"height":24,"xoffset":-3,"yoffset":11,"xadvance":17,"page":0,"chnl":0},{"id":62,"x":243,"y":137,"width":23,"height":24,"xoffset":-2,"yoffset":12,"xadvance":17,"page":0,"chnl":0},{"id":60,"x":266,"y":137,"width":23,"height":24,"xoffset":-3,"yoffset":12,"xadvance":17,"page":0,"chnl":0},{"id":58,"x":289,"y":137,"width":14,"height":24,"xoffset":-3,"yoffset":14,"xadvance":8,"page":0,"chnl":0},{"id":187,"x":303,"y":137,"width":23,"height":23,"xoffset":-3,"yoffset":14,"xadvance":16,"page":0,"chnl":0},{"id":185,"x":326,"y":137,"width":17,"height":23,"xoffset":-4,"yoffset":4,"xadvance":10,"page":0,"chnl":0},{"id":179,"x":343,"y":137,"width":20,"height":23,"xoffset":-3,"yoffset":4,"xadvance":13,"page":0,"chnl":0},{"id":174,"x":363,"y":137,"width":24,"height":23,"xoffset":-3,"yoffset":6,"xadvance":17,"page":0,"chnl":0},{"id":171,"x":387,"y":137,"width":23,"height":23,"xoffset":-3,"yoffset":14,"xadvance":16,"page":0,"chnl":0},{"id":186,"x":410,"y":137,"width":21,"height":21,"xoffset":-3,"yoffset":9,"xadvance":14,"page":0,"chnl":0},{"id":199,"x":431,"y":137,"width":26,"height":40,"xoffset":-3,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":253,"x":457,"y":137,"width":27,"height":39,"xoffset":-4,"yoffset":5,"xadvance":17,"page":0,"chnl":0},{"id":221,"x":0,"y":177,"width":28,"height":39,"xoffset":-4,"yoffset":-1,"xadvance":19,"page":0,"chnl":0},{"id":219,"x":28,"y":177,"width":27,"height":39,"xoffset":-2,"yoffset":-1,"xadvance":21,"page":0,"chnl":0},{"id":218,"x":55,"y":177,"width":27,"height":39,"xoffset":-2,"yoffset":-1,"xadvance":21,"page":0,"chnl":0},{"id":217,"x":82,"y":177,"width":27,"height":39,"xoffset":-2,"yoffset":-1,"xadvance":21,"page":0,"chnl":0},{"id":213,"x":109,"y":177,"width":28,"height":39,"xoffset":-3,"yoffset":-1,"xadvance":22,"page":0,"chnl":0},{"id":212,"x":137,"y":177,"width":28,"height":39,"xoffset":-3,"yoffset":-1,"xadvance":22,"page":0,"chnl":0},{"id":206,"x":165,"y":177,"width":24,"height":39,"xoffset":-6,"yoffset":-1,"xadvance":9,"page":0,"chnl":0},{"id":205,"x":189,"y":177,"width":18,"height":39,"xoffset":-2,"yoffset":-1,"xadvance":9,"page":0,"chnl":0},{"id":204,"x":207,"y":177,"width":19,"height":39,"xoffset":-6,"yoffset":-1,"xadvance":9,"page":0,"chnl":0},{"id":202,"x":226,"y":177,"width":24,"height":39,"xoffset":-2,"yoffset":-1,"xadvance":18,"page":0,"chnl":0},{"id":201,"x":250,"y":177,"width":24,"height":39,"xoffset":-2,"yoffset":-1,"xadvance":18,"page":0,"chnl":0},{"id":200,"x":274,"y":177,"width":24,"height":39,"xoffset":-2,"yoffset":-1,"xadvance":18,"page":0,"chnl":0},{"id":197,"x":298,"y":177,"width":30,"height":39,"xoffset":-4,"yoffset":-1,"xadvance":20,"page":0,"chnl":0},{"id":193,"x":328,"y":177,"width":30,"height":39,"xoffset":-4,"yoffset":-1,"xadvance":20,"page":0,"chnl":0},{"id":192,"x":358,"y":177,"width":30,"height":39,"xoffset":-4,"yoffset":-1,"xadvance":20,"page":0,"chnl":0},{"id":255,"x":388,"y":177,"width":27,"height":38,"xoffset":-4,"yoffset":6,"xadvance":17,"page":0,"chnl":0},{"id":254,"x":415,"y":177,"width":25,"height":38,"xoffset":-2,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":220,"x":440,"y":177,"width":27,"height":38,"xoffset":-2,"yoffset":0,"xadvance":21,"page":0,"chnl":0},{"id":214,"x":467,"y":177,"width":28,"height":38,"xoffset":-3,"yoffset":0,"xadvance":22,"page":0,"chnl":0},{"id":211,"x":0,"y":216,"width":28,"height":38,"xoffset":-3,"yoffset":0,"xadvance":22,"page":0,"chnl":0},{"id":210,"x":28,"y":216,"width":28,"height":38,"xoffset":-3,"yoffset":0,"xadvance":22,"page":0,"chnl":0},{"id":209,"x":56,"y":216,"width":28,"height":38,"xoffset":-2,"yoffset":0,"xadvance":23,"page":0,"chnl":0},{"id":207,"x":84,"y":216,"width":18,"height":38,"xoffset":-4,"yoffset":0,"xadvance":9,"page":0,"chnl":0},{"id":203,"x":102,"y":216,"width":24,"height":38,"xoffset":-2,"yoffset":0,"xadvance":18,"page":0,"chnl":0},{"id":196,"x":126,"y":216,"width":30,"height":38,"xoffset":-4,"yoffset":0,"xadvance":20,"page":0,"chnl":0},{"id":195,"x":156,"y":216,"width":30,"height":38,"xoffset":-4,"yoffset":0,"xadvance":20,"page":0,"chnl":0},{"id":194,"x":186,"y":216,"width":30,"height":38,"xoffset":-4,"yoffset":0,"xadvance":20,"page":0,"chnl":0},{"id":216,"x":216,"y":216,"width":28,"height":35,"xoffset":-3,"yoffset":5,"xadvance":22,"page":0,"chnl":0},{"id":251,"x":244,"y":216,"width":24,"height":34,"xoffset":-2,"yoffset":4,"xadvance":19,"page":0,"chnl":0},{"id":250,"x":268,"y":216,"width":24,"height":34,"xoffset":-2,"yoffset":4,"xadvance":19,"page":0,"chnl":0},{"id":249,"x":292,"y":216,"width":24,"height":34,"xoffset":-2,"yoffset":4,"xadvance":19,"page":0,"chnl":0},{"id":237,"x":316,"y":216,"width":18,"height":34,"xoffset":-3,"yoffset":4,"xadvance":9,"page":0,"chnl":0},{"id":236,"x":334,"y":216,"width":19,"height":34,"xoffset":-6,"yoffset":4,"xadvance":9,"page":0,"chnl":0},{"id":231,"x":353,"y":216,"width":23,"height":34,"xoffset":-3,"yoffset":12,"xadvance":16,"page":0,"chnl":0},{"id":229,"x":376,"y":216,"width":24,"height":34,"xoffset":-3,"yoffset":4,"xadvance":18,"page":0,"chnl":0},{"id":244,"x":400,"y":216,"width":25,"height":33,"xoffset":-3,"yoffset":5,"xadvance":18,"page":0,"chnl":0},{"id":243,"x":425,"y":216,"width":25,"height":33,"xoffset":-3,"yoffset":5,"xadvance":18,"page":0,"chnl":0},{"id":242,"x":450,"y":216,"width":25,"height":33,"xoffset":-3,"yoffset":5,"xadvance":18,"page":0,"chnl":0},{"id":238,"x":475,"y":216,"width":22,"height":33,"xoffset":-6,"yoffset":5,"xadvance":9,"page":0,"chnl":0},{"id":234,"x":0,"y":254,"width":25,"height":33,"xoffset":-3,"yoffset":5,"xadvance":18,"page":0,"chnl":0},{"id":233,"x":25,"y":254,"width":25,"height":33,"xoffset":-3,"yoffset":5,"xadvance":18,"page":0,"chnl":0},{"id":232,"x":50,"y":254,"width":25,"height":33,"xoffset":-3,"yoffset":5,"xadvance":18,"page":0,"chnl":0},{"id":226,"x":75,"y":254,"width":24,"height":33,"xoffset":-3,"yoffset":5,"xadvance":18,"page":0,"chnl":0},{"id":225,"x":99,"y":254,"width":24,"height":33,"xoffset":-3,"yoffset":5,"xadvance":18,"page":0,"chnl":0},{"id":224,"x":123,"y":254,"width":24,"height":33,"xoffset":-3,"yoffset":5,"xadvance":18,"page":0,"chnl":0},{"id":223,"x":147,"y":254,"width":31,"height":33,"xoffset":-4,"yoffset":5,"xadvance":22,"page":0,"chnl":0},{"id":252,"x":178,"y":254,"width":24,"height":32,"xoffset":-2,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":246,"x":202,"y":254,"width":25,"height":32,"xoffset":-3,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":245,"x":227,"y":254,"width":25,"height":32,"xoffset":-3,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":241,"x":252,"y":254,"width":24,"height":32,"xoffset":-2,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":240,"x":276,"y":254,"width":25,"height":32,"xoffset":-3,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":239,"x":301,"y":254,"width":19,"height":32,"xoffset":-5,"yoffset":6,"xadvance":9,"page":0,"chnl":0},{"id":235,"x":320,"y":254,"width":25,"height":32,"xoffset":-3,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":228,"x":345,"y":254,"width":24,"height":32,"xoffset":-3,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":227,"x":369,"y":254,"width":24,"height":32,"xoffset":-3,"yoffset":6,"xadvance":18,"page":0,"chnl":0},{"id":222,"x":393,"y":254,"width":25,"height":32,"xoffset":-2,"yoffset":6,"xadvance":19,"page":0,"chnl":0},{"id":208,"x":418,"y":254,"width":29,"height":32,"xoffset":-4,"yoffset":6,"xadvance":22,"page":0,"chnl":0},{"id":198,"x":447,"y":254,"width":39,"height":32,"xoffset":-5,"yoffset":6,"xadvance":29,"page":0,"chnl":0},{"id":191,"x":486,"y":254,"width":24,"height":32,"xoffset":-3,"yoffset":12,"xadvance":16,"page":0,"chnl":0},{"id":190,"x":0,"y":287,"width":38,"height":32,"xoffset":-3,"yoffset":6,"xadvance":31,"page":0,"chnl":0},{"id":189,"x":38,"y":287,"width":37,"height":32,"xoffset":-4,"yoffset":6,"xadvance":29,"page":0,"chnl":0},{"id":188,"x":75,"y":287,"width":37,"height":32,"xoffset":-4,"yoffset":6,"xadvance":28,"page":0,"chnl":0},{"id":248,"x":112,"y":287,"width":25,"height":31,"xoffset":-3,"yoffset":10,"xadvance":18,"page":0,"chnl":0},{"id":247,"x":137,"y":287,"width":25,"height":26,"xoffset":-3,"yoffset":10,"xadvance":18,"page":0,"chnl":0},{"id":230,"x":162,"y":287,"width":35,"height":26,"xoffset":-3,"yoffset":12,"xadvance":28,"page":0,"chnl":0},{"id":215,"x":197,"y":287,"width":23,"height":22,"xoffset":-3,"yoffset":13,"xadvance":16,"page":0,"chnl":0},{"id":170,"x":220,"y":287,"width":21,"height":21,"xoffset":-3,"yoffset":8,"xadvance":14,"page":0,"chnl":0},{"id":42,"x":241,"y":287,"width":21,"height":21,"xoffset":-3,"yoffset":6,"xadvance":14,"page":0,"chnl":0},{"id":61,"x":262,"y":287,"width":24,"height":20,"xoffset":-2,"yoffset":13,"xadvance":19,"page":0,"chnl":0},{"id":94,"x":286,"y":287,"width":23,"height":19,"xoffset":-4,"yoffset":8,"xadvance":14,"page":0,"chnl":0},{"id":44,"x":309,"y":287,"width":14,"height":19,"xoffset":-3,"yoffset":24,"xadvance":8,"page":0,"chnl":0},{"id":176,"x":323,"y":287,"width":18,"height":18,"xoffset":-3,"yoffset":7,"xadvance":11,"page":0,"chnl":0},{"id":180,"x":341,"y":287,"width":18,"height":17,"xoffset":-3,"yoffset":5,"xadvance":11,"page":0,"chnl":0},{"id":172,"x":359,"y":287,"width":24,"height":17,"xoffset":-2,"yoffset":17,"xadvance":19,"page":0,"chnl":0},{"id":39,"x":383,"y":287,"width":13,"height":17,"xoffset":-3,"yoffset":6,"xadvance":7,"page":0,"chnl":0},{"id":96,"x":396,"y":287,"width":18,"height":17,"xoffset":-4,"yoffset":5,"xadvance":11,"page":0,"chnl":0},{"id":34,"x":414,"y":287,"width":18,"height":17,"xoffset":-3,"yoffset":6,"xadvance":12,"page":0,"chnl":0},{"id":184,"x":432,"y":287,"width":16,"height":16,"xoffset":-4,"yoffset":30,"xadvance":8,"page":0,"chnl":0},{"id":183,"x":448,"y":287,"width":13,"height":14,"xoffset":-2,"yoffset":18,"xadvance":8,"page":0,"chnl":0},{"id":175,"x":461,"y":287,"width":20,"height":14,"xoffset":-3,"yoffset":6,"xadvance":13,"page":0,"chnl":0},{"id":168,"x":481,"y":287,"width":19,"height":14,"xoffset":-2,"yoffset":6,"xadvance":13,"page":0,"chnl":0},{"id":126,"x":0,"y":319,"width":22,"height":14,"xoffset":-2,"yoffset":17,"xadvance":17,"page":0,"chnl":0},{"id":46,"x":22,"y":319,"width":14,"height":14,"xoffset":-3,"yoffset":24,"xadvance":8,"page":0,"chnl":0},{"id":173,"x":36,"y":319,"width":19,"height":13,"xoffset":-2,"yoffset":18,"xadvance":14,"page":0,"chnl":0},{"id":95,"x":55,"y":319,"width":24,"height":13,"xoffset":-2,"yoffset":28,"xadvance":18,"page":0,"chnl":0},{"id":45,"x":79,"y":319,"width":19,"height":13,"xoffset":-2,"yoffset":18,"xadvance":14,"page":0,"chnl":0}],"kernings":[],"info":{"face":"Exo 2 Semi Bold","size":32,"bold":0,"italic":0,"charset":"","unicode":0,"stretchH":100,"smooth":1,"aa":1,"padding":[4,4,4,4],"spacing":[-8,-8]},"common":{"lineHeight":40,"base":33,"scaleW":512,"scaleH":512,"pages":1,"packed":0}}
 },{}],3:[function(require,module,exports){
 (function (global){
@@ -310,7 +359,6 @@ TextPass.prototype.render = function(renderer, writeBuffer, readBuffer, delta) {
     });
 
     renderer.resetGLState();
-    renderer.resetAttributes();
 };
 
 module.exports = TextPass;
@@ -602,7 +650,7 @@ module.exports = function(opt) {
 
     function draw(dt) {
         time +=  Math.min(dt, 30) / 1000
-        renderer.resetAttributes()
+        // renderer.resetAttributes()
         renderer.resetGLState()
 
         water.material.uniforms.time.value = time * 0.1
@@ -6049,7 +6097,7 @@ function createBuffer(gl, data, type, usage) {
 }
 
 module.exports = createBuffer
-},{"ndarray":72,"ndarray-ops":67,"typedarray-pool":94,"webglew":98}],54:[function(require,module,exports){
+},{"ndarray":72,"ndarray-ops":67,"typedarray-pool":94,"webglew":99}],54:[function(require,module,exports){
 var create = require('gl-texture2d')
 var ndarray = require('ndarray')
 
@@ -6666,7 +6714,7 @@ function createTexture2D(gl) {
   throw new Error('gl-texture2d: Invalid arguments for texture2d constructor')
 }
 
-},{"ndarray":72,"ndarray-ops":67,"typedarray-pool":94,"webglew":98}],59:[function(require,module,exports){
+},{"ndarray":72,"ndarray-ops":67,"typedarray-pool":94,"webglew":99}],59:[function(require,module,exports){
 module.exports = set;
 
 /**
@@ -9640,6 +9688,26 @@ module.exports = function range(min, max, value) {
   return (value - min) / (max - min)
 }
 },{}],97:[function(require,module,exports){
+module.exports = function(opts) {
+    if (typeof document === 'undefined')
+        return null //for terminal
+    opts = opts||{}
+    var canvas = opts.canvas || document.createElement("canvas")
+    if (typeof opts.width === "number")
+        canvas.width = opts.width
+    if (typeof opts.height === "number")
+        canvas.height = opts.height
+
+    var attribs = opts
+    var gl
+    try {
+        gl = (canvas.getContext('webgl', attribs) || canvas.getContext('experimental-webgl', attribs))
+    } catch (e) {
+        gl = null
+    }
+    return (gl || null) //ensure null on fail
+}
+},{}],98:[function(require,module,exports){
 // Copyright (C) 2011 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -10326,7 +10394,7 @@ module.exports = function range(min, max, value) {
   }
 })();
 
-},{}],98:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 'use strict'
 
 var weakMap = typeof WeakMap === 'undefined' ? require('weak-map') : WeakMap
@@ -10368,19 +10436,7 @@ function initWebGLEW(gl) {
   return extensions
 }
 module.exports = initWebGLEW
-},{"weak-map":97}],99:[function(require,module,exports){
-module.exports = hasKeys
-
-function hasKeys(source) {
-    return source !== null &&
-        (typeof source === "object" ||
-        typeof source === "function")
-}
-
-},{}],100:[function(require,module,exports){
-var Keys = require("object-keys")
-var hasKeys = require("./has-keys")
-
+},{"weak-map":98}],100:[function(require,module,exports){
 module.exports = extend
 
 function extend() {
@@ -10389,148 +10445,15 @@ function extend() {
     for (var i = 0; i < arguments.length; i++) {
         var source = arguments[i]
 
-        if (!hasKeys(source)) {
-            continue
-        }
-
-        var keys = Keys(source)
-
-        for (var j = 0; j < keys.length; j++) {
-            var name = keys[j]
-            target[name] = source[name]
+        for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+                target[key] = source[key]
+            }
         }
     }
 
     return target
 }
 
-},{"./has-keys":99,"object-keys":102}],101:[function(require,module,exports){
-var hasOwn = Object.prototype.hasOwnProperty;
-var toString = Object.prototype.toString;
-
-var isFunction = function (fn) {
-	var isFunc = (typeof fn === 'function' && !(fn instanceof RegExp)) || toString.call(fn) === '[object Function]';
-	if (!isFunc && typeof window !== 'undefined') {
-		isFunc = fn === window.setTimeout || fn === window.alert || fn === window.confirm || fn === window.prompt;
-	}
-	return isFunc;
-};
-
-module.exports = function forEach(obj, fn) {
-	if (!isFunction(fn)) {
-		throw new TypeError('iterator must be a function');
-	}
-	var i, k,
-		isString = typeof obj === 'string',
-		l = obj.length,
-		context = arguments.length > 2 ? arguments[2] : null;
-	if (l === +l) {
-		for (i = 0; i < l; i++) {
-			if (context === null) {
-				fn(isString ? obj.charAt(i) : obj[i], i, obj);
-			} else {
-				fn.call(context, isString ? obj.charAt(i) : obj[i], i, obj);
-			}
-		}
-	} else {
-		for (k in obj) {
-			if (hasOwn.call(obj, k)) {
-				if (context === null) {
-					fn(obj[k], k, obj);
-				} else {
-					fn.call(context, obj[k], k, obj);
-				}
-			}
-		}
-	}
-};
-
-
-},{}],102:[function(require,module,exports){
-module.exports = Object.keys || require('./shim');
-
-
-},{"./shim":104}],103:[function(require,module,exports){
-var toString = Object.prototype.toString;
-
-module.exports = function isArguments(value) {
-	var str = toString.call(value);
-	var isArguments = str === '[object Arguments]';
-	if (!isArguments) {
-		isArguments = str !== '[object Array]'
-			&& value !== null
-			&& typeof value === 'object'
-			&& typeof value.length === 'number'
-			&& value.length >= 0
-			&& toString.call(value.callee) === '[object Function]';
-	}
-	return isArguments;
-};
-
-
-},{}],104:[function(require,module,exports){
-(function () {
-	"use strict";
-
-	// modified from https://github.com/kriskowal/es5-shim
-	var has = Object.prototype.hasOwnProperty,
-		toString = Object.prototype.toString,
-		forEach = require('./foreach'),
-		isArgs = require('./isArguments'),
-		hasDontEnumBug = !({'toString': null}).propertyIsEnumerable('toString'),
-		hasProtoEnumBug = (function () {}).propertyIsEnumerable('prototype'),
-		dontEnums = [
-			"toString",
-			"toLocaleString",
-			"valueOf",
-			"hasOwnProperty",
-			"isPrototypeOf",
-			"propertyIsEnumerable",
-			"constructor"
-		],
-		keysShim;
-
-	keysShim = function keys(object) {
-		var isObject = object !== null && typeof object === 'object',
-			isFunction = toString.call(object) === '[object Function]',
-			isArguments = isArgs(object),
-			theKeys = [];
-
-		if (!isObject && !isFunction && !isArguments) {
-			throw new TypeError("Object.keys called on a non-object");
-		}
-
-		if (isArguments) {
-			forEach(object, function (value) {
-				theKeys.push(value);
-			});
-		} else {
-			var name,
-				skipProto = hasProtoEnumBug && isFunction;
-
-			for (name in object) {
-				if (!(skipProto && name === 'prototype') && has.call(object, name)) {
-					theKeys.push(name);
-				}
-			}
-		}
-
-		if (hasDontEnumBug) {
-			var ctor = object.constructor,
-				skipConstructor = ctor && ctor.prototype === object;
-
-			forEach(dontEnums, function (dontEnum) {
-				if (!(skipConstructor && dontEnum === 'constructor') && has.call(object, dontEnum)) {
-					theKeys.push(dontEnum);
-				}
-			});
-		}
-		return theKeys;
-	};
-
-	module.exports = keysShim;
-}());
-
-
-},{"./foreach":101,"./isArguments":103}]},{},[1])(1)
+},{}]},{},[1])(1)
 });

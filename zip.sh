@@ -2,7 +2,7 @@ rm -f zip/blackice-demo.zip && \
 zip zip/blackice-demo.zip -r \
         build/blackice.js \
         build/blackice.min.js \
-        build/three-libs.minjs \
+        build/three-libs.min.js \
         build/three-libs.js \
         build/three-libs.js.map \
         fonts/Exo2SemiBold.fnt \
@@ -15,5 +15,5 @@ zip zip/blackice-demo.zip -r \
         img/no-webgl.jpg \
         model/PrirazlomnayaUnwrappedFinal.mtl \
         model/PrirazlomnayaUnwrappedFinal.obj \
-        model/texture.png \
-        test.html
+        model/PrirazlomnayaTexture.jpg \
+        index.html
