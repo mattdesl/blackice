@@ -14,7 +14,6 @@ require('domready')(function() {
     })
 })
 
-
 function webgl() {
     var canvas = document.createElement('canvas')
     canvas.style.display = 'block'

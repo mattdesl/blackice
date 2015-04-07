@@ -87,7 +87,7 @@ function fallback() {
         parent.style['text-align'] = 'center'
 
         var text = document.createElement('div')
-        text.textContent = 'Sorry, your browser does not support WebGL!'
+        text.textContent = 'Sorry, your browser does not support WebGL'
         text.style.color = 'white'
         text.style['margin-top'] = '25%'
         text.style['font-family'] = 'Helvetica, sans-serif'
